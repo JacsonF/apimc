@@ -1,17 +1,21 @@
 package com.jacsonferreira.apimc;
-import java.util.Arrays;
-
+import java.util.Arrays;import org.assertj.core.api.ArraySortedAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.jacsonferreira.apimc.domain.Address;
 import com.jacsonferreira.apimc.domain.Category;
 import com.jacsonferreira.apimc.domain.City;
+import com.jacsonferreira.apimc.domain.Client;
 import com.jacsonferreira.apimc.domain.Product;
 import com.jacsonferreira.apimc.domain.State;
+import com.jacsonferreira.apimc.domain.enums.ClientType;
+import com.jacsonferreira.apimc.repositories.AddressRepository;
 import com.jacsonferreira.apimc.repositories.CategoryRepository;
 import com.jacsonferreira.apimc.repositories.CityRepositoriy;
+import com.jacsonferreira.apimc.repositories.ClientRepository;
 import com.jacsonferreira.apimc.repositories.ProductRepository;
 import com.jacsonferreira.apimc.repositories.StateRepository;
 
@@ -27,6 +31,10 @@ public class ApimcApplication implements CommandLineRunner {
 	StateRepository stateRepository;
 	@Autowired
 	CityRepositoriy cityRepositoriy;
+	@Autowired
+	ClientRepository clientRepository;
+	@Autowired
+	AddressRepository addressRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ApimcApplication.class, args);
@@ -63,5 +71,18 @@ public class ApimcApplication implements CommandLineRunner {
 		
 		stateRepository.save(Arrays.asList(st1,st2));
 		cityRepositoriy.save(Arrays.asList(city,city2,city3));
+		
+		
+		
+		Client cli1 = new Client(null, "Maria Silva", "maria@gmail.com", "36378912377", ClientType.INDIVIDUALPERSON);
+		cli1.getPhones().addAll(Arrays.asList("27363323", "93838393"));
+		
+		Address e1 = new Address(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cli1, city);
+		Address e2 = new Address(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, city2);
+		
+		cli1.getAddresses().addAll(Arrays.asList(e1,e2));
+	
+		clientRepository.save(cli1);
+		addressRepository.save(Arrays.asList(e1,e2));
 	}
 }
