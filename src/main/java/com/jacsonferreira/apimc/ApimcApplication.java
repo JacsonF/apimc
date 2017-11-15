@@ -7,19 +7,26 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.jacsonferreira.apimc.domain.Category;
+import com.jacsonferreira.apimc.domain.City;
 import com.jacsonferreira.apimc.domain.Product;
+import com.jacsonferreira.apimc.domain.State;
 import com.jacsonferreira.apimc.repositories.CategoryRepository;
+import com.jacsonferreira.apimc.repositories.CityRepositoriy;
 import com.jacsonferreira.apimc.repositories.ProductRepository;
+import com.jacsonferreira.apimc.repositories.StateRepository;
 
 
 @SpringBootApplication
 public class ApimcApplication implements CommandLineRunner {
 	
 	@Autowired
-	CategoryRepository categoryRepository;
-	
+	CategoryRepository categoryRepository;	
 	@Autowired
 	ProductRepository productRepository;
+	@Autowired
+	StateRepository stateRepository;
+	@Autowired
+	CityRepositoriy cityRepositoriy;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ApimcApplication.class, args);
@@ -40,7 +47,21 @@ public class ApimcApplication implements CommandLineRunner {
 		p1.getCategories().addAll(Arrays.asList(cat1));
 		p2.getCategories().addAll(Arrays.asList(cat1, cat2));
 		p3.getCategories().addAll(Arrays.asList(cat1));
+		
 		categoryRepository.save(Arrays.asList(cat1,cat2));
 		productRepository.save(Arrays.asList(p1,p2,p3));
+		
+		State st1 = new State(null, "Minas Gerais");
+		State st2 = new State(null, "São Paulo");
+		
+		City city = new City(null, "Belo Horizonte", st1);
+		City city2 = new City(null, "Santos", st2);
+		City city3 = new City(null, "Campinas", st2);
+		
+		st1.getCities().addAll(Arrays.asList(city));
+		st2.getCities().addAll(Arrays.asList(city2,city3));
+		
+		stateRepository.save(Arrays.asList(st1,st2));
+		cityRepositoriy.save(Arrays.asList(city,city2,city3));
 	}
 }
