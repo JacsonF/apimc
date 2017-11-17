@@ -4,14 +4,14 @@ public enum ClientType {
 	INDIVIDUALPERSON(1,"INDIVIDUALPERSON"),
 	JURIDICALPERSON(2,"JURIDICALPERSON");
 
-	private int cod;
+	private Integer cod;
 	private String description;
 	
 	private ClientType(int cod, String description) {
 		this.cod =cod;
 		this.description =description;
 	}
-	public int getCod() {
+	public Integer getCod() {
 		return cod;
 	}
 	public String getDescription() {
