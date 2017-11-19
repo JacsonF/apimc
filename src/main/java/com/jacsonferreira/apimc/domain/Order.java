@@ -2,6 +2,8 @@ package com.jacsonferreira.apimc.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -31,6 +34,8 @@ public class Order implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="address_id")
 	private Address address;
+	@OneToMany(mappedBy="id.order")
+	private Set<ItemOrder>  itens = new HashSet<>();
 	
 	public Order(){
 		
@@ -82,6 +87,13 @@ public class Order implements Serializable{
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+	public Set<ItemOrder> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemOrder> itens) {
+		this.itens = itens;
 	}
 
 	@Override

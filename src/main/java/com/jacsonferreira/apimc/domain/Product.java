@@ -2,7 +2,9 @@ package com.jacsonferreira.apimc.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -50,6 +53,9 @@ public class Product implements Serializable{
 	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
+	@OneToMany(mappedBy="id.product")
+	private Set<ItemOrder>  itens = new HashSet<>();
+	
 	public Product(Integer id, String nome, Double preco) {
 		super();
 		this.id = id;
@@ -60,11 +66,24 @@ public class Product implements Serializable{
 		
 	}
 
+	public List<Order> gerOrders() {
+		List<Order> list = new ArrayList<>();
+		for(ItemOrder x: itens) {
+			list.add(x.getOrder());
+		}
+		return list;
+	}
 	public List<Category> getCategories() {
 		return categories;
 	}
 	public void setCategories(List<Category> categories) {
 		this.categories = categories;
+	}
+	public Set<ItemOrder> getItens() {
+		return itens;
+	}
+	public void setItens(Set<ItemOrder> itens) {
+		this.itens = itens;
 	}
 	@Override
 	public int hashCode() {

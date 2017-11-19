@@ -1,5 +1,4 @@
 package com.jacsonferreira.apimc;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
@@ -14,6 +13,7 @@ import com.jacsonferreira.apimc.domain.CardPayment;
 import com.jacsonferreira.apimc.domain.Category;
 import com.jacsonferreira.apimc.domain.City;
 import com.jacsonferreira.apimc.domain.Client;
+import com.jacsonferreira.apimc.domain.ItemOrder;
 import com.jacsonferreira.apimc.domain.Order;
 import com.jacsonferreira.apimc.domain.Payment;
 import com.jacsonferreira.apimc.domain.Product;
@@ -24,6 +24,7 @@ import com.jacsonferreira.apimc.repositories.AddressRepository;
 import com.jacsonferreira.apimc.repositories.CategoryRepository;
 import com.jacsonferreira.apimc.repositories.CityRepositoriy;
 import com.jacsonferreira.apimc.repositories.ClientRepository;
+import com.jacsonferreira.apimc.repositories.ItemOrderRepository;
 import com.jacsonferreira.apimc.repositories.OrderRepository;
 import com.jacsonferreira.apimc.repositories.PaymentRepository;
 import com.jacsonferreira.apimc.repositories.ProductRepository;
@@ -48,7 +49,9 @@ public class ApimcApplication implements CommandLineRunner {
 	@Autowired
 	OrderRepository orderRepository;
 	@Autowired
-	PaymentRepository paymentRepository;
+	PaymentRepository paymentRepository;	
+	@Autowired
+	ItemOrderRepository itemOrderRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ApimcApplication.class, args);
@@ -115,6 +118,19 @@ public class ApimcApplication implements CommandLineRunner {
 		orderRepository.save(Arrays.asList(ped1,ped2));
 		paymentRepository.save(Arrays.asList(pgto1, pgto2));
 	
-	
+		
+		ItemOrder ip1 = new ItemOrder(ped1, p1, 0.00, 1, 2000.00);
+		ItemOrder ip2 = new ItemOrder(ped1, p3, 0.00, 2, 80.00);
+		ItemOrder ip3 = new ItemOrder(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemOrderRepository.save(Arrays.asList(ip1, ip2, ip3));	
+		
 	}
 }
