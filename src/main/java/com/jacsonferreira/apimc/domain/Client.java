@@ -36,11 +36,8 @@ public class Client implements Serializable{
 	@CollectionTable(name="PHONE")
 //	Coluna de telefones que não permite valor repetido
 	private Set<String> phones = new HashSet<>();
-	
-	public Client() {
-		
-	}
-
+	@OneToMany(mappedBy="client")
+	private List<Order> orders = new ArrayList<>();
 	public Client(Integer id, String name, String email, String cpfOrCnpj, ClientType clientType) {
 		super();
 		this.id = id;
@@ -106,6 +103,21 @@ public class Client implements Serializable{
 		this.phones = phones;
 	}
 
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+
+	public void setClientType(Integer clientType) {
+		this.clientType = clientType;
+	}
+
+	public Client() {
+		
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

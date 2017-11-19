@@ -1,21 +1,31 @@
 package com.jacsonferreira.apimc;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.jacsonferreira.apimc.domain.Address;
+import com.jacsonferreira.apimc.domain.BoletoPayment;
+import com.jacsonferreira.apimc.domain.CardPayment;
 import com.jacsonferreira.apimc.domain.Category;
 import com.jacsonferreira.apimc.domain.City;
 import com.jacsonferreira.apimc.domain.Client;
+import com.jacsonferreira.apimc.domain.Order;
+import com.jacsonferreira.apimc.domain.Payment;
 import com.jacsonferreira.apimc.domain.Product;
 import com.jacsonferreira.apimc.domain.State;
 import com.jacsonferreira.apimc.domain.enums.ClientType;
+import com.jacsonferreira.apimc.domain.enums.PaymentState;
 import com.jacsonferreira.apimc.repositories.AddressRepository;
 import com.jacsonferreira.apimc.repositories.CategoryRepository;
 import com.jacsonferreira.apimc.repositories.CityRepositoriy;
 import com.jacsonferreira.apimc.repositories.ClientRepository;
+import com.jacsonferreira.apimc.repositories.OrderRepository;
+import com.jacsonferreira.apimc.repositories.PaymentRepository;
 import com.jacsonferreira.apimc.repositories.ProductRepository;
 import com.jacsonferreira.apimc.repositories.StateRepository;
 
@@ -35,6 +45,10 @@ public class ApimcApplication implements CommandLineRunner {
 	ClientRepository clientRepository;
 	@Autowired
 	AddressRepository addressRepository;
+	@Autowired
+	OrderRepository orderRepository;
+	@Autowired
+	PaymentRepository paymentRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ApimcApplication.class, args);
@@ -84,5 +98,23 @@ public class ApimcApplication implements CommandLineRunner {
 	
 		clientRepository.save(cli1);
 		addressRepository.save(Arrays.asList(e1,e2));
+	
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy hh:mm");
+	
+		Order ped1 = new Order(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
+		Order ped2 = new Order(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
+
+		Payment pgto1 = new CardPayment(null, PaymentState.PAY, ped1, 6);
+		ped1.setPayment(pgto1);
+		
+		Payment pgto2 = new BoletoPayment(null, PaymentState.PENDING, ped2, sdf.parse("20/10/2017 00:00"), null);
+		ped2.setPayment(pgto2);
+		
+		cli1.getOrders().addAll(Arrays.asList(ped1, ped2));
+		
+		orderRepository.save(Arrays.asList(ped1,ped2));
+		paymentRepository.save(Arrays.asList(pgto1, pgto2));
+	
+	
 	}
 }
