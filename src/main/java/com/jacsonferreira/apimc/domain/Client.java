@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.jacsonferreira.apimc.domain.enums.ClientType;
 
@@ -28,6 +29,7 @@ public class Client implements Serializable{
 	private String email;
 	private String cpfOrCnpj;
 	private Integer clientType;
+	
 	@OneToMany(mappedBy="client")
 	@JsonManagedReference
 	private List<Address> addresses= new ArrayList<>();
@@ -36,6 +38,8 @@ public class Client implements Serializable{
 	@CollectionTable(name="PHONE")
 //	Coluna de telefones que não permite valor repetido
 	private Set<String> phones = new HashSet<>();
+	
+	@JsonBackReference
 	@OneToMany(mappedBy="client")
 	private List<Order> orders = new ArrayList<>();
 	public Client(Integer id, String name, String email, String cpfOrCnpj, ClientType clientType) {

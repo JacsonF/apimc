@@ -2,12 +2,16 @@ package com.jacsonferreira.apimc.domain;
 import java.util.Date;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jacsonferreira.apimc.domain.enums.PaymentState;
 @Entity
 public class BoletoPayment  extends Payment{
 	private static final long serialVersionUID = 1L;
 	
+	@JsonFormat(pattern="yyy/MM/dd")
 	private Date datePayment;
+	
+	@JsonFormat(pattern="yyy/MM/dd")
 	private Date dateExpiry;
 	
 	
