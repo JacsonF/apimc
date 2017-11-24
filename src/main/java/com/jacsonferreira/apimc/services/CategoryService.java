@@ -20,4 +20,8 @@ public class CategoryService {
 		}
 		return obj;
 	}
+	public Category insert(Category category) {
+		category.setId(null);
+		return repo.save(category);
+	}
 }
