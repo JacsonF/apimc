@@ -8,9 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToMany;   
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class State implements Serializable{
@@ -23,7 +23,7 @@ public class State implements Serializable{
 	private String name;
 	
 	@OneToMany(mappedBy="state")
-	@JsonBackReference
+	@JsonIgnore
 	private List<City> cities = new ArrayList<>();
 	
 	public State() {
