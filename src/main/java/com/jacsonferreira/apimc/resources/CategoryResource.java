@@ -1,5 +1,7 @@
 package com.jacsonferreira.apimc.resources;
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.jacsonferreira.apimc.domain.Category;
+import com.jacsonferreira.apimc.dto.CategoryDTO;
 import com.jacsonferreira.apimc.services.CategoryService;
 import com.jacsonferreira.apimc.services.exceptions.DataIntegrityExeption;
 
@@ -52,5 +55,12 @@ public class CategoryResource {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 		
+	}
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<CategoryDTO>>findall(){
+		List<Category> categories = service.findAll();
+		
+		List<CategoryDTO> categoryDTOs = categories.stream().map( obj -> new CategoryDTO(obj)).collect(Collectors.toList()); 
+		return ResponseEntity.ok().body(categoryDTOs);
 	}
 }

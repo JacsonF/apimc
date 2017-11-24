@@ -1,5 +1,7 @@
 package com.jacsonferreira.apimc.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -37,5 +39,8 @@ public class CategoryService {
 		}catch (DataIntegrityViolationException  e) {
 			throw new DataIntegrityExeption("Can not delete a category that has products");
 		}
+	}
+	public List<Category> findAll() {
+		return repo.findAll();
 	}
 }
