@@ -2,12 +2,17 @@ package com.jacsonferreira.apimc.dto;
 
 import java.io.Serializable;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.jacsonferreira.apimc.domain.Category;
 
 public class CategoryDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Integer id;
+	@NotEmpty(message="name is required")
+	@Length(min=5,max=80, message="o tamanho deve ser entre 5 e 80 caracteres")
 	private String nome;
 	
 	public CategoryDTO() {

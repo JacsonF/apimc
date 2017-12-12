@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.jacsonferreira.apimc.domain.Category;
+import com.jacsonferreira.apimc.dto.CategoryDTO;
 import com.jacsonferreira.apimc.repositories.CategoryRepository;
 import com.jacsonferreira.apimc.services.exceptions.DataIntegrityExeption;
 import com.jacsonferreira.apimc.services.exceptions.ObjectNotFoundException;
@@ -49,6 +50,9 @@ public class CategoryService {
 	public Page<Category> findPage(Integer page , Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = new PageRequest(page, linesPerPage,Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
+	}
+	public Category fromDTO(CategoryDTO categoryDTO) {
+		return new Category(categoryDTO.getId(),categoryDTO.getNome());
 	}
 }
 
