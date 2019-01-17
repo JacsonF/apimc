@@ -12,29 +12,30 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jacsonferreira.apimc.domain.enums.PaymentState;
+
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
-public abstract class Payment implements Serializable{
-	
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Payment implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 	@Id
 	private Integer id;
 	private Integer state;
-	
+
 	@JsonIgnore
 	@OneToOne
-	@JoinColumn(name="order_id")
+	@JoinColumn(name = "order_id")
 	@MapsId
 	private Order order;
-	
+
 	public Payment() {
-		
+
 	}
 
 	public Payment(Integer id, PaymentState state, Order order) {
 		super();
 		this.id = id;
-		this.state = state.getCod();
+		this.state = (state == null) ? null : state.getCod();
 		this.order = order;
 	}
 
@@ -86,6 +87,5 @@ public abstract class Payment implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
+
 }

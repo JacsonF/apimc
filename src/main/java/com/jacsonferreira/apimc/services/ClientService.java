@@ -10,7 +10,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.jacsonferreira.apimc.domain.Client;
-import com.jacsonferreira.apimc.domain.Client;
 import com.jacsonferreira.apimc.dto.ClientDTO;
 import com.jacsonferreira.apimc.repositories.ClientRepository;
 import com.jacsonferreira.apimc.services.exceptions.DataIntegrityExeption;
