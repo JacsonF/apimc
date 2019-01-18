@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,35 +20,37 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jacsonferreira.apimc.domain.enums.ClientType;
 
 @Entity
-public class Client implements Serializable{
-	
+public class Client implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
+	@Column(unique = true)
 	private String email;
 	private String cpfOrCnpj;
 	private Integer clientType;
-	
-	@OneToMany(mappedBy="client", cascade=CascadeType.ALL)
-	private List<Address> addresses= new ArrayList<>();
-	
+
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+	private List<Address> addresses = new ArrayList<>();
+
 	@ElementCollection
-	@CollectionTable(name="PHONE")
-//	Coluna de telefones que não permite valor repetido
+	@CollectionTable(name = "PHONE")
+	// Coluna de telefones que não permite valor repetido
 	private Set<String> phones = new HashSet<>();
-	
+
 	@JsonIgnore
-	@OneToMany(mappedBy="client")
+	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
+
 	public Client(Integer id, String name, String email, String cpfOrCnpj, ClientType clientType) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.cpfOrCnpj = cpfOrCnpj;
-		this.clientType = (clientType==null) ? null :  clientType.getCod();
+		this.clientType = (clientType == null) ? null : clientType.getCod();
 	}
 
 	public Integer getId() {
@@ -119,8 +122,9 @@ public class Client implements Serializable{
 	}
 
 	public Client() {
-		
+
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
