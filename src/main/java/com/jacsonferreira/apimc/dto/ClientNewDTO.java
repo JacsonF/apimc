@@ -2,20 +2,39 @@ package com.jacsonferreira.apimc.dto;
 
 import java.io.Serializable;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.jacsonferreira.apimc.services.validation.ClientInsert;
+
+@ClientInsert
 public class ClientNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@NotEmpty(message = "Preenchimento obrigatorio")
+	@Length(min = 5, message = "o tamanho deve ser entre 5 a 120 caracteres")
 	private String name;
+
+	@NotEmpty(message = "Preenchimento obrigatorio")
+	@Email(message = "Email invalido")
 	private String email;
+
+	@NotEmpty(message = "Preenchimento obrigatorio")
 	private String cpfOrCnpj;
+
 	private Integer clientType;
 
+	@NotEmpty(message = "Preenchimento obrigatorio")
 	private String patio;
 	private String number;
 	private String complement;
 	private String district;
+
+	@NotEmpty(message = "Preenchimento obrigatorio")
 	private String cep;
 
+	@NotEmpty(message = "Preenchimento obrigatorio")
 	private String phone1;
 	private String phone2;
 	private String phone3;
