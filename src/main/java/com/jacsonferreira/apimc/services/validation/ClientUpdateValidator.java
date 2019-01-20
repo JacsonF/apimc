@@ -28,6 +28,7 @@ public class ClientUpdateValidator implements ConstraintValidator<ClientUpdate, 
 	@Override
 	public boolean isValid(ClientDTO objDto, ConstraintValidatorContext context) {
 		List<FieldMessage> list = new ArrayList<>();
+		@SuppressWarnings("unchecked")
 		Map<String,String> map	= (Map<String, String>) httpResquest
 				.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
 
