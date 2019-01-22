@@ -31,6 +31,9 @@ public class ItemOrder implements Serializable{
 		this.price = price;
 	}
 	
+	public double getSubTotal(){
+		return (price - discount) * amount;
+	}
 	public ItemOrderPK getId() {
 		return id;
 	}
