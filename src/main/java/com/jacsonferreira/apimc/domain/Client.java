@@ -30,7 +30,7 @@ public class Client implements Serializable {
 	@Column(unique = true)
 	private String email;
 	private String cpfOrCnpj;
-	private Integer clientType;
+	private Integer type;
 
 	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
 	private List<Address> addresses = new ArrayList<>();
@@ -50,7 +50,7 @@ public class Client implements Serializable {
 		this.name = name;
 		this.email = email;
 		this.cpfOrCnpj = cpfOrCnpj;
-		this.clientType = (clientType == null) ? null : clientType.getCod();
+		this.type = (clientType == null) ? null : clientType.getCod();
 	}
 
 	public Integer getId() {
@@ -86,11 +86,11 @@ public class Client implements Serializable {
 	}
 
 	public ClientType getClientType() {
-		return ClientType.toEnum(clientType);
+		return ClientType.toEnum(type);
 	}
 
 	public void setClientType(ClientType clientType) {
-		this.clientType = clientType.getCod();
+		this.type = clientType.getCod();
 	}
 
 	public List<Address> getAddresses() {
@@ -116,11 +116,6 @@ public class Client implements Serializable {
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
 	}
-
-	public void setClientType(Integer clientType) {
-		this.clientType = clientType;
-	}
-
 	public Client() {
 
 	}
