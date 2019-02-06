@@ -1,8 +1,11 @@
 package com.jacsonferreira.apimc.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -19,32 +22,31 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name="TB_ORDER")
-public class Order implements Serializable{
-	
+@Table(name = "TB_ORDER")
+public class Order implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@JsonFormat(pattern="yyy/MM/dd hh:mm")
+	@JsonFormat(pattern = "yyy/MM/dd hh:mm")
 	private Date instant;
-	
-	
-	@OneToOne(cascade = CascadeType.ALL, mappedBy="order")
+
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
 	private Payment payment;
-	
+
 	@ManyToOne
-	@JoinColumn(name="client_id")
-	
+	@JoinColumn(name = "client_id")
+
 	private Client client;
 	@ManyToOne
-	@JoinColumn(name="address_id")
+	@JoinColumn(name = "address_id")
 	private Address address;
-	@OneToMany(mappedBy="id.order")
-	private Set<ItemOrder>  itens = new HashSet<>();
-	
-	public Order(){
-		
+	@OneToMany(mappedBy = "id.order")
+	private Set<ItemOrder> itens = new HashSet<>();
+
+	public Order() {
+
 	}
 
 	public Order(Integer id, Date instant, Client client, Address address) {
@@ -54,13 +56,15 @@ public class Order implements Serializable{
 		this.client = client;
 		this.address = address;
 	}
-	public double getTotalValue(){
-		double soma =0.0;
+
+	public double getTotalValue() {
+		double soma = 0.0;
 		for (ItemOrder itemOrder : itens) {
-			soma = soma+ itemOrder.getSubTotal();
+			soma = soma + itemOrder.getSubTotal();
 		}
 		return soma;
 	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -100,6 +104,7 @@ public class Order implements Serializable{
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+
 	public Set<ItemOrder> getItens() {
 		return itens;
 	}
@@ -132,5 +137,27 @@ public class Order implements Serializable{
 			return false;
 		return true;
 	}
-	
+
+	@Override
+	public String toString() {
+		SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		StringBuilder builder = new StringBuilder();
+		builder.append("Pedido número: ");
+		builder.append(getId());
+		builder.append(", Instante: ");
+		builder.append(sdf.format(getInstant()));
+		builder.append(", Cliente: ");
+		builder.append(getClient().getName());
+		builder.append(", Situacao do pagamento: ");
+		builder.append(getPayment().getState().getDescription());
+		builder.append("\nDetalhes:\n");
+		for (ItemOrder item : getItens()) {
+			builder.append(item.toString());
+		}
+		builder.append("Valor Total: ");
+		builder.append(nf.format(getTotalValue()));
+		return builder.toString();
+	}
+
 }

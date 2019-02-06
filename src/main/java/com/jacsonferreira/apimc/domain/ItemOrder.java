@@ -1,6 +1,8 @@
 package com.jacsonferreira.apimc.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -8,8 +10,8 @@ import javax.persistence.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class ItemOrder implements Serializable{
-	
+public class ItemOrder implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 	@JsonIgnore
 	@EmbeddedId
@@ -30,10 +32,11 @@ public class ItemOrder implements Serializable{
 		this.amount = amount;
 		this.price = price;
 	}
-	
-	public double getSubTotal(){
+
+	public double getSubTotal() {
 		return (price - discount) * amount;
 	}
+
 	public ItemOrderPK getId() {
 		return id;
 	}
@@ -66,20 +69,22 @@ public class ItemOrder implements Serializable{
 		this.price = price;
 	}
 
-	//Order and price 
-	
-	public Product getProduct( ) {
+	// Order and price
+
+	public Product getProduct() {
 		return id.getProduct();
 	}
-	public void setProduct(Product product){
+
+	public void setProduct(Product product) {
 		id.setProduct(product);
 	}
 
 	@JsonIgnore
-	public Order getOrder( ) {
+	public Order getOrder() {
 		return id.getOrder();
 	}
-	public void setOrder(Order order){
+
+	public void setOrder(Order order) {
 		id.setOrder(order);
 	}
 
@@ -107,5 +112,20 @@ public class ItemOrder implements Serializable{
 			return false;
 		return true;
 	}
-	
+
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		StringBuilder builder = new StringBuilder();
+		builder.append(getProduct().getNome());
+		builder.append(", Qte: ");
+		builder.append(getAmount());
+		builder.append(", Preço unitario: ");
+		builder.append(nf.format(getPrice()));
+		builder.append(", Subtotal: ");
+		builder.append(nf.format(getSubTotal()));
+		builder.append("\n");
+		return builder.toString();
+	}
+
 }

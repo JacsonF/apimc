@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+import javax.transaction.Transactional;
+
 import com.jacsonferreira.apimc.domain.BoletoPayment;
 import com.jacsonferreira.apimc.domain.ItemOrder;
 import com.jacsonferreira.apimc.domain.Order;
@@ -40,7 +42,8 @@ public class OrderService {
 		}
 		return obj;
 	}
-
+	
+	@Transactional
 	public Order insert(Order obj) {
 		obj.setId(null);
 		obj.setInstant(new Date());
@@ -55,11 +58,12 @@ public class OrderService {
 		paymentRepository.save(obj.getPayment());
 		for (ItemOrder order : obj.getItens()) {
 			order.setDiscount(0.0);
-			order.setProduct(productService.Find(order.getProduct().getId()));
-			order.setPrice(productRepository.findOne(order.getProduct().getId()).getPreco());
+			order.setProduct(productService.Find(order.getProduct().getId())); 
+			order.setPrice(order.getProduct().getPreco());
 			order.setOrder(obj);
 		}
 		itemOrderRepository.save(obj.getItens());
+		System.out.println(obj);
 		return obj;
 	}
 }
