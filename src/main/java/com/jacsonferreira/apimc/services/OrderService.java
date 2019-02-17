@@ -38,7 +38,7 @@ public class OrderService {
 	public Order Find(Integer id) {
 		Order obj = repo.findOne(id);
 		if (obj == null) {
-			throw new ObjectNotFoundException("objeto não encontrado id: " + id + " , tipo: " + Order.class.getName());
+			throw new ObjectNotFoundException("Cannot find object id: " + id + " , type: " + Order.class.getName());
 		}
 		return obj;
 	}
@@ -59,7 +59,7 @@ public class OrderService {
 		for (ItemOrder order : obj.getItens()) {
 			order.setDiscount(0.0);
 			order.setProduct(productService.Find(order.getProduct().getId())); 
-			order.setPrice(order.getProduct().getPreco());
+			order.setPrice(order.getProduct().getPrice());
 			order.setOrder(obj);
 		}
 		itemOrderRepository.save(obj.getItens());

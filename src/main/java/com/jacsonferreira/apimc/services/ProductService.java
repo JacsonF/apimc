@@ -26,7 +26,7 @@ public class ProductService {
 		Product obj = repo.findOne(id);
 		if (obj == null) {
 			throw new ObjectNotFoundException(
-					"objeto não encontrado id: " + id + " , tipo: " + Product.class.getName());
+					"Cannot find object id: " + id + " , type: " + Product.class.getName());
 		}
 		return obj;
 	}
@@ -36,6 +36,6 @@ public class ProductService {
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		List<Category> categories = categoryRepository.findAll(ids);
 
-		return repo.findDistinctByNomeContainingAndCategoriesIn(name, categories, pageRequest);
+		return repo.findDistinctByNameContainingAndCategoriesIn(name, categories, pageRequest);
 	}
 }

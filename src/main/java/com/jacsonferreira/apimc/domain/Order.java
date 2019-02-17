@@ -143,19 +143,19 @@ public class Order implements Serializable {
 		SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 		StringBuilder builder = new StringBuilder();
-		builder.append("Pedido número: ");
+		builder.append("Order number: ");
 		builder.append(getId());
 		builder.append(", Instante: ");
 		builder.append(sdf.format(getInstant()));
-		builder.append(", Cliente: ");
+		builder.append(", Client: ");
 		builder.append(getClient().getName());
-		builder.append(", Situacao do pagamento: ");
+		builder.append(", Payment status: ");
 		builder.append(getPayment().getState().getDescription());
-		builder.append("\nDetalhes:\n");
+		builder.append("\nDetails:\n");
 		for (ItemOrder item : getItens()) {
 			builder.append(item.toString());
 		}
-		builder.append("Valor Total: ");
+		builder.append("Total Value: ");
 		builder.append(nf.format(getTotalValue()));
 		return builder.toString();
 	}

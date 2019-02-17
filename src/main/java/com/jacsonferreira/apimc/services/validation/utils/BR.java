@@ -1,5 +1,7 @@
 package com.jacsonferreira.apimc.services.validation.utils;
 
+//https://github.com/feharaujo/Cpf-Validator
+
 public class BR {
 	// CPF
 	private static final int[] weightSsn = { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };

@@ -25,8 +25,8 @@ public class Product implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String nome;
-	private Double preco;
+	private String name;
+	private Double price;
 	
 	@JsonBackReference 
 	@ManyToMany
@@ -42,27 +42,27 @@ public class Product implements Serializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public Double getPreco() {
-		return preco;
+	public Double getPrice() {
+		return price;
 	}
-	public void setPreco(Double preco) {
-		this.preco = preco;
+	public void setPrice(Double preco) {
+		this.price = preco;
 	}
 	@JsonIgnore
 	@OneToMany(mappedBy="id.product")
 	private Set<ItemOrder>  itens = new HashSet<>();
 	
-	public Product(Integer id, String nome, Double preco) {
+	public Product(Integer id, String name, Double price) {
 		super();
 		this.id = id;
-		this.nome = nome;
-		this.preco = preco;
+		this.name = name;
+		this.price = price;
 	}
 	public Product() {
 		

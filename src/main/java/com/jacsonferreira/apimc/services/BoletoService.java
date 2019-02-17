@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class BoletoService {
-    public void preencherPagamentoComBoleto(BoletoPayment boletoPayment, Date instanteDoPedido) {
+    public void preencherPagamentoComBoleto(BoletoPayment boletoPayment, Date orderInstant) {
         Calendar cal = Calendar.getInstance();
-        cal.setTime(instanteDoPedido);
+        cal.setTime(orderInstant);
         cal.add(Calendar.DAY_OF_MONTH, 7);
         boletoPayment.setDateExpiry(cal.getTime() );
     }

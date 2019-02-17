@@ -14,7 +14,7 @@ import com.jacsonferreira.apimc.domain.Product;;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Transactional(readOnly = true)
-    Page<Product> findDistinctByNomeContainingAndCategoriesIn(String name,List<Category> categories,
+    Page<Product> findDistinctByNameContainingAndCategoriesIn(String name,List<Category> categories,
             Pageable pageRequest);
 
 }

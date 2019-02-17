@@ -115,12 +115,12 @@ public class ItemOrder implements Serializable {
 
 	@Override
 	public String toString() {
-		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en", "US"));
 		StringBuilder builder = new StringBuilder();
-		builder.append(getProduct().getNome());
-		builder.append(", Qte: ");
+		builder.append(getProduct().getName());
+		builder.append(", Amount: ");
 		builder.append(getAmount());
-		builder.append(", Preço unitario: ");
+		builder.append(", Unit price: ");
 		builder.append(nf.format(getPrice()));
 		builder.append(", Subtotal: ");
 		builder.append(nf.format(getSubTotal()));

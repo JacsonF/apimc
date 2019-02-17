@@ -25,18 +25,28 @@ public class ClientInsertValidator implements ConstraintValidator<ClientInsert, 
 	public boolean isValid(ClientNewDTO objDto, ConstraintValidatorContext context) {
 		List<FieldMessage> list = new ArrayList<>();
 
-		if (objDto.getClientType().equals(ClientType.INDIVIDUALPERSON.getCod())
-				&& !BR.isValidCPF(objDto.getCpfOrCnpj())) {
-			list.add(new FieldMessage("cpfOrCnpj", "CPF invalid!"));
+		if (objDto.getClientType() == null) {
+			list.add(new FieldMessage("clientType", "ClientType Is required"));
+		} else {
+			if (objDto.getClientType().equals(ClientType.INDIVIDUALPERSON.getCod())
+					&& !BR.isValidCPF(objDto.getCpfOrCnpj())) {
+				list.add(new FieldMessage("cpfOrCnpj", "CPF invalid!"));
+			}
+			if (objDto.getClientType().equals(ClientType.JURIDICALPERSON.getCod())
+					&& !BR.isValidCNPJ(objDto.getCpfOrCnpj())) {
+				list.add(new FieldMessage("cpfOrCnpj", "CNPJ invalid"));
+			}
 		}
-		if (objDto.getClientType().equals(ClientType.JURIDICALPERSON.getCod())
-				&& !BR.isValidCNPJ(objDto.getCpfOrCnpj())) {
-			list.add(new FieldMessage("cpfOrCnpj", "CNPJ invalid"));
+		if (objDto.getEmail().isEmpty() || objDto.getEmail() == null) {
+			list.add(new FieldMessage("email", "Email is required"));
+		} else {
+			Client client = clientRepository.findByEmail(objDto.getEmail());
+			if (client != null) {
+				list.add(new FieldMessage("email", "Email already exists"));
+			}
 		}
-
-		Client client = clientRepository.findByEmail(objDto.getEmail());
-		if (client != null) {
-			list.add(new FieldMessage("email", "Email already exists"));
+		if(objDto.getCityId() == null) {
+			list.add(new FieldMessage("cityId", "cityId is required"));
 		}
 		for (FieldMessage e : list) {
 			context.disableDefaultConstraintViolation();

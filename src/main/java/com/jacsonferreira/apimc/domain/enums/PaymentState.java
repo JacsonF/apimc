@@ -27,6 +27,6 @@ public enum PaymentState {
 				return xPaymentState;
 			}
 		}
-		throw new IllegalArgumentException("Id inválido: "+cod);
+		throw new IllegalArgumentException("Invalid Id: "+cod);
 	}
 }

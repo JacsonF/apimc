@@ -12,15 +12,15 @@ public class CategoryDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	@NotEmpty(message="name is required")
-	@Length(min=5,max=80, message="o tamanho deve ser entre 5 e 80 caracteres")
-	private String nome;
+	@Length(min=5,max=80, message="the size should be between 5 and 80 characters")
+	private String name;
 	
 	public CategoryDTO() {
 		
 	}
 	public CategoryDTO(Category category) {
 		id= category.getId();
-		nome = category.getNome();
+		name = category.getName();
 	}
 
 	public Integer getId() {
@@ -31,12 +31,12 @@ public class CategoryDTO implements Serializable {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String nome) {
+		this.name = nome;
 	}
 	
 	

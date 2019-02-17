@@ -37,7 +37,6 @@ public class Client implements Serializable {
 
 	@ElementCollection
 	@CollectionTable(name = "PHONE")
-	// Coluna de telefones que não permite valor repetido
 	private Set<String> phones = new HashSet<>();
 
 	@JsonIgnore

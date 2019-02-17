@@ -27,6 +27,6 @@ public enum ClientType {
 				return xClientType;
 			}
 		}
-		throw new IllegalArgumentException("Id inválido: "+cod);
+		throw new IllegalArgumentException("Invalid Id: "+cod);
 	}
 }

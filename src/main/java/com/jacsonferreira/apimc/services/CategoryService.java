@@ -25,7 +25,7 @@ public class CategoryService {
 		Category obj = repo.findOne(id);
 		if (obj == null) {
 			throw new ObjectNotFoundException(
-					"objeto não encontrado id: " + id + " , tipo: " + Category.class.getName());
+					"Cannot find object id: " + id + " , type: " + Category.class.getName());
 		}
 		return obj;
 	}
@@ -60,10 +60,10 @@ public class CategoryService {
 	}
 
 	public Category fromDTO(CategoryDTO categoryDTO) {
-		return new Category(categoryDTO.getId(), categoryDTO.getNome());
+		return new Category(categoryDTO.getId(), categoryDTO.getName());
 	}
 
 	private void updateData(Category newObj, Category obj) {
-		newObj.setNome(obj.getNome());
+		newObj.setName(obj.getName());
 	}
 }

@@ -41,7 +41,7 @@ public class ClientService {
 	public Client Find(Integer id) {
 		Client obj = repo.findOne(id);
 		if (obj == null) {
-			throw new ObjectNotFoundException("objeto não encontrado id: " + id + " , tipo: " + Client.class.getName());
+			throw new ObjectNotFoundException("Cannot find object id: " + id + " , type: " + Client.class.getName());
 		}
 		return obj;
 	}

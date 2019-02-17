@@ -12,26 +12,26 @@ import com.jacsonferreira.apimc.services.validation.ClientInsert;
 public class ClientNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@NotEmpty(message = "Preenchimento obrigatorio")
-	@Length(min = 5, message = "o tamanho deve ser entre 5 a 120 caracteres")
+	@NotEmpty(message = "Is required")
+	@Length(min = 5, message = "the size should be between 5 and 120 characters")
 	private String name;
 
-	@NotEmpty(message = "Preenchimento obrigatorio")
-	@Email(message = "Email invalido")
+	@NotEmpty(message = "Is required")
+	@Email(message = "Ivalid email")
 	private String email;
 
-	@NotEmpty(message = "Preenchimento obrigatorio")
+	@NotEmpty(message = "Is required")
 	private String cpfOrCnpj;
 
 	private Integer clientType;
 
-	@NotEmpty(message = "Preenchimento obrigatorio")
+	@NotEmpty(message = "Is required")
 	private String patio;
 	private String number;
 	private String complement;
 	private String district;
 
-	@NotEmpty(message = "Preenchimento obrigatorio")
+	@NotEmpty(message = "Is required")
 	private String cep;
 
 	@NotEmpty(message = "Preenchimento obrigatorio")
