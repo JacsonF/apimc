@@ -34,6 +34,8 @@ public class OrderService {
 	private ProductService productService;
 	@Autowired
 	private ClientService clientService;
+	@Autowired
+	private EmailService emailService;
 
 	public Order Find(Integer id) {
 		Order obj = repo.findOne(id);
@@ -42,7 +44,7 @@ public class OrderService {
 		}
 		return obj;
 	}
-	
+
 	@Transactional
 	public Order insert(Order obj) {
 		obj.setId(null);
@@ -58,12 +60,12 @@ public class OrderService {
 		paymentRepository.save(obj.getPayment());
 		for (ItemOrder order : obj.getItens()) {
 			order.setDiscount(0.0);
-			order.setProduct(productService.Find(order.getProduct().getId())); 
+			order.setProduct(productService.Find(order.getProduct().getId()));
 			order.setPrice(order.getProduct().getPrice());
 			order.setOrder(obj);
 		}
 		itemOrderRepository.save(obj.getItens());
-		System.out.println(obj);
+		emailService.senderOrderConfirmationEmail(obj);
 		return obj;
 	}
 }
